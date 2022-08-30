@@ -1,7 +1,12 @@
-'use scrict'
+// https://www.geeksforgeeks.org/how-to-throw-an-error-in-an-async-generator-function-in-javascript/
 
-const run = () => {
-  console.log('server running!')
+async function* generator() {
+  yield Promise.reject(new Error('something bad happened'))
 }
 
-run()
+const iterator = generator()
+
+iterator
+  .next()
+  .then(result => console.log(result.value))
+  .catch(error => console.log(error))
